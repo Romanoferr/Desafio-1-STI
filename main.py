@@ -38,8 +38,8 @@ class Aluno:
 			if self.ativo == "Inativo":
 				print("Matricula encontra-se inativa")
 
-		for i in range(len(self.uffmail_list)):
-			print(self.uffmail_list[i])
+	def set_uffmail(self, uffmail):
+		self.uffmail = uffmail
 
 
 arquivo = Arquivo()
@@ -61,7 +61,25 @@ while nova != "N":
 		if nova == "N":
 			quit()
 
+
 aluno.gera_uffmail()
 
-# TODO mostrar a lista de possiveis email ao usuario
+print("Por favor, escolha uma das opcoes abaixo: ")
+
+escolhido = False
+while not escolhido:
+	for i in range(len(aluno.uffmail_list)):
+		print(str(i + 1) + "..... " + aluno.uffmail_list[i])  # imprime a lista de possiveis uffmail para escolha do usuario
+
+	escolha = int(input())
+	# checa se o numero que o usurio oferece tem equivalencia a algum email
+	if escolha < 1 or escolha > len(aluno.uffmail_list):  # caso nao tenha equivalencia pede uma nova entrada valida
+		print("Escolha invalida, escolha um numero entre 1 e " + str(len(aluno.uffmail_list)) + "\n")
+	else:  # caso tenha equivalencia guarda na variavel email_escolhido
+		email_escolhido = aluno.uffmail_list[escolha - 1]
+		escolhido = True
+
+aluno.set_uffmail(email_escolhido)
+print(aluno.uffmail)
+
 # TODO quando escolhido o email, gravar no arquivo
