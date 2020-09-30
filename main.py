@@ -1,51 +1,5 @@
-import csv
-
-
-class Arquivo:
-	def __init__(self):
-		self.lista_arquivo = []
-		self.dir_arquivo = 'Desafio-1-STI/alunostemp.csv'
-
-	def gera_lista_arquivo(self):  # metodo que le o arquivo e coloca em memoria
-		with open(self.dir_arquivo, 'r') as arquivo_base:
-			info_arquivo = csv.reader(arquivo_base)
-			for line in info_arquivo:
-				self.lista_arquivo.append(line)
-
-	"""def grava_uffmail(self, uffmail):  # metodo que grava no arquivo o email escolhido
-
-		with open(self.dir_arquivo) as arquivo_base:
-			escrever_uffmail = csv.writer(arquivo_base)
-			escrever_uffmail.writerow()
-"""
-
-
-class Aluno:
-	def __init__(self, nome, matricula, telefone, email, uffmail, ativo):
-		self.nome = nome
-		self.matricula = matricula
-		self.telefone = telefone
-		self.email = email
-		self.uffmail = uffmail
-		self.ativo = ativo
-		self.uffmail_list = []
-
-	def gera_uffmail(self):  # metodo que preenche a lista uffmail_list com opcoes de email baseado no nomde do aluno
-		if (self.ativo == "Ativo") and (self.uffmail == ""):  # o Aluno deve estar Ativo e nao possuir uffmail
-			nomes = self.nome.split(" ")
-			self.uffmail_list.append((nomes[0] + nomes[2] + "@id.uff.br").lower())
-			self.uffmail_list.append((nomes[0] + nomes[1] + "@id.uff.br").lower())
-			self.uffmail_list.append((nomes[0][0] + nomes[1][0] + nomes[2] + "@id.uff.br").lower())
-			self.uffmail_list.append((nomes[0] + nomes[1][0] + nomes[2] + "@id.uff.br").lower())
-			self.uffmail_list.append((nomes[0] + "_" + nomes[2] + "@id.uff.br").lower())
-			self.uffmail_list.append((nomes[0] + nomes[1][0:2] + nomes[2][0:2] + "@id.uff.br").lower())
-			self.uffmail_list.append((nomes[0] + nomes[1][0] + nomes[2][0] + "@id.uff.br").lower())
-
-	def set_uffmail(self, uffmail):
-		self.uffmail = uffmail
-
-
-# main
+from .arquivo import Arquivo
+from .aluno import Aluno
 
 arquivo = Arquivo()
 arquivo.gera_lista_arquivo()
