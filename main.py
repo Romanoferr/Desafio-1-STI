@@ -32,11 +32,6 @@ class Aluno:
 			self.uffmail_list.append((nomes[0] + "_" + nomes[2] + "@id.uff.br").lower())
 			self.uffmail_list.append((nomes[0] + nomes[1][0:2] + nomes[2][0:2] + "@id.uff.br").lower())
 			self.uffmail_list.append((nomes[0] + nomes[1][0] + nomes[2][0] + "@id.uff.br").lower())
-		else:  # checa
-			if self.uffmail:
-				print("Email idUFF ja existente: " + self.uffmail)
-			if self.ativo == "Inativo":
-				print("Matricula encontra-se inativa")
 
 	def set_uffmail(self, uffmail):
 		self.uffmail = uffmail
@@ -62,22 +57,33 @@ while nova != "N":
 			quit()
 
 
-aluno.gera_uffmail()
+if aluno.uffmail:   # checo se o aluno possui uffmail e se possui matricula ativa
+	print("Email idUFF ja existente: " + aluno.uffmail)
 
-print("Por favor, escolha uma das opcoes abaixo: ")
+elif aluno.ativo == "Inativo":
+	print("Matricula encontra-se inativa")
 
-escolhido = False
-while not escolhido:
-	for i in range(len(aluno.uffmail_list)):
-		print(str(i + 1) + "..... " + aluno.uffmail_list[i])  # imprime a lista de possiveis uffmail para escolha do usuario
+else:   # o algoritmo de escolha do uffmail so acontece se o aluno nao possuir uffmail e estiver Ativo
+	aluno.gera_uffmail()
+	print("Por favor, escolha uma das opcoes abaixo: ")
 
-	escolha = int(input())
-	# checa se o numero que o usurio oferece tem equivalencia a algum email
-	if escolha < 1 or escolha > len(aluno.uffmail_list):  # caso nao tenha equivalencia pede uma nova entrada valida
-		print("Escolha invalida, escolha um numero entre 1 e " + str(len(aluno.uffmail_list)) + "\n")
-	else:  # caso tenha equivalencia guarda na variavel email_escolhido
-		email_escolhido = aluno.uffmail_list[escolha - 1]
-		escolhido = True
+	escolhido = False
+	while not escolhido:
+		for i in range(len(aluno.uffmail_list)):
+			print(str(i + 1) + "..... " + aluno.uffmail_list[i])  # imprime a lista de possiveis uffmail para escolha do usuario
+
+		try:
+			escolha = int(input())
+			# checa se o numero que o usurio oferece tem equivalencia a algum email
+			if escolha < 1 or escolha > len(aluno.uffmail_list):  # caso nao tenha equivalencia pede uma nova entrada valida
+				print("Escolha invalida, escolha um numero entre 1 e " + str(len(aluno.uffmail_list)))
+			else:  # caso tenha equivalencia guarda na variavel email_escolhido
+				email_escolhido = aluno.uffmail_list[escolha - 1]
+				escolhido = True
+
+		except ValueError:
+			print("Tipo de entrada incorreto, por favor digite um numero entre 1 e " + str(len(aluno.uffmail_list)))
+
 
 aluno.set_uffmail(email_escolhido)
 print(aluno.uffmail)
