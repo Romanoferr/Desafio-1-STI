@@ -4,12 +4,20 @@ import csv
 class Arquivo:
 	def __init__(self):
 		self.lista_arquivo = []
+		self.dir_arquivo = 'Desafio-1-STI/alunostemp.csv'
 
 	def gera_lista_arquivo(self):  # metodo que le o arquivo e coloca em memoria
-		with open('Desafio-1-STI/alunostemp.csv', 'r') as arquivo_base:
+		with open(self.dir_arquivo, 'r') as arquivo_base:
 			info_arquivo = csv.reader(arquivo_base)
 			for line in info_arquivo:
 				self.lista_arquivo.append(line)
+
+	"""def grava_uffmail(self, uffmail):  # metodo que grava no arquivo o email escolhido
+
+		with open(self.dir_arquivo) as arquivo_base:
+			escrever_uffmail = csv.writer(arquivo_base)
+			escrever_uffmail.writerow()
+"""
 
 
 class Aluno:
@@ -37,6 +45,8 @@ class Aluno:
 		self.uffmail = uffmail
 
 
+# main
+
 arquivo = Arquivo()
 arquivo.gera_lista_arquivo()
 
@@ -56,36 +66,38 @@ while nova != "N":
 		if nova == "N":
 			quit()
 
-
-if aluno.uffmail:   # checo se o aluno possui uffmail e se possui matricula ativa
-	print("Email idUFF ja existente: " + aluno.uffmail)
-
-elif aluno.ativo == "Inativo":
-	print("Matricula encontra-se inativa")
-
-else:   # o algoritmo de escolha do uffmail so acontece se o aluno nao possuir uffmail e estiver Ativo
+if aluno.ativo == "Ativo" and aluno.uffmail == "":  # o algoritmo de escolha do uffmail so acontece se o aluno nao
+	# possuir uffmail e estiver Ativo
 	aluno.gera_uffmail()
 	print("Por favor, escolha uma das opcoes abaixo: ")
 
 	escolhido = False
 	while not escolhido:
 		for i in range(len(aluno.uffmail_list)):
-			print(str(i + 1) + "..... " + aluno.uffmail_list[i])  # imprime a lista de possiveis uffmail para escolha do usuario
+			print(str(i + 1) + "..... " + aluno.uffmail_list[
+				i])  # imprime a lista de possiveis uffmail para escolha do usuario
 
 		try:
 			escolha = int(input())
 			# checa se o numero que o usurio oferece tem equivalencia a algum email
-			if escolha < 1 or escolha > len(aluno.uffmail_list):  # caso nao tenha equivalencia pede uma nova entrada valida
+			if escolha < 1 or escolha > len(
+					aluno.uffmail_list):  # caso nao tenha equivalencia pede uma nova entrada valida
 				print("Escolha invalida, escolha um numero entre 1 e " + str(len(aluno.uffmail_list)))
-			else:  # caso tenha equivalencia guarda na variavel email_escolhido
-				email_escolhido = aluno.uffmail_list[escolha - 1]
+			else:  # caso tenha equivalencia guarda na propriedade uffmail de aluno
+				aluno.set_uffmail(aluno.uffmail_list[escolha - 1])
 				escolhido = True
 
-		except ValueError:
+		except ValueError:  # trata entradas que nao sao numeros inteiros
 			print("Tipo de entrada incorreto, por favor digite um numero entre 1 e " + str(len(aluno.uffmail_list)))
 
+# arquivo.grava_uffmail(aluno.uffmail)
 
-aluno.set_uffmail(email_escolhido)
-print(aluno.uffmail)
+else:  # imprimo mensagem caso o aluno ja possua uffmail ou matricula Inativa
+	if aluno.uffmail:
+		print("Email idUFF ja existente: " + aluno.uffmail)
 
-# TODO quando escolhido o email, gravar no arquivo
+	if aluno.ativo == "Inativo":
+		print("Matricula encontra-se inativa")
+
+# TODO gravar email escolhido no arquivo
+# TODO enviar mensagem de criacao de email idUFF
