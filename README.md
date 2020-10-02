@@ -1,5 +1,5 @@
 # Desafio 1 STI
-Implementação da criação de cotas de e-mail @id.uff.br. A entrada é feita a partir do arquivo alunos.csv, a matrícula do aluno é pesquisada e deve ser oferecida opções de e-mail para escolha.
+Implementação da criação de e-mail @id.uff.br. A entrada é feita a partir do arquivo alunos.csv, a matrícula do aluno é pesquisada e deve ser oferecida opções de e-mail para escolha.
 O email escolhido é gravado no arquivo.
 
 
